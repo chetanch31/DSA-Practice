@@ -4,32 +4,28 @@ using namespace std;
 
 class Solution {
 public:
-	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+	vector<vector<int>> permute(vector<int>& nums) {
 		vector<vector<int>> ans;
 		vector<int> temp;
-		sort(candidates.begin(), candidates.end());
-		helper(0, target, candidates, ans, temp);
 
+		helper(0, nums, ans, temp);
 		return ans;
+
 	}
 private:
-	void helper(int ind, int target, vector<int>& candidates, vector<vector<int>>& ans, vector<int>& temp) {
-		if (target == 0) {
+	void helper(int ind, vector<int>& nums, vector<vector<int>>& ans, vector<int> temp) {
+
+		if (ind == nums.size()) {
 			ans.push_back(temp);
 			return;
 		}
 
-		for (int i = ind; i < candidates.size(); i++) {
-
-			if (i > ind and candidates[i] == candidates[i - 1]) continue;
-			if (candidates[i] > target) break;
-
-			temp.push_back(candidates[i]);
-			helper(i + 1, target - candidates[i], candidates, ans, temp);
-			temp.pop_back();
-
-		}
+		temp.push_back(nums[ind]);
+		helper(ind + 1, nums, ans, temp);
+		temp.pop_back();
+		helper(ind + 1, nums, ans, temp);
 	}
+
 };
 
 int main() {
